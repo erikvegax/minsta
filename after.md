@@ -1,0 +1,2 @@
+- [ ] add a customer snack bar
+- [ ] add multiple screens for sign up and make it hella UX
