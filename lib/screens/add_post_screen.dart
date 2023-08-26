@@ -2,8 +2,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:minsta/providers/user_provider.dart';
 import 'package:minsta/models/user.dart';
+import 'package:minsta/providers/user_provider.dart';
 import 'package:minsta/resources/auth_methods.dart';
 import 'package:minsta/resources/firestore_methods.dart';
 import 'package:minsta/utils/colors.dart';

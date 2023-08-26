@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:minsta/resources/firestore_methods.dart';
+import 'package:minsta/screens/edit_profile_screen.dart';
 import 'package:minsta/utils/colors.dart';
 import 'package:minsta/utils/global_variables.dart';
 import 'package:minsta/utils/utils.dart';
@@ -119,7 +120,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             borderColor: Colors.grey,
                                             textColor: primaryColor,
                                             text: "edit profile",
-                                            function: () {},
+                                            function: () =>
+                                                Navigator.of(context)
+                                                    .push(
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            EditProfileScreen(
+                                                                uid:
+                                                                    widget.uid),
+                                                      ),
+                                                    )
+                                                    .then(
+                                                      (value) => setState(
+                                                        () {
+                                                          getData();
+                                                        },
+                                                      ),
+                                                    ),
                                           )
                                         : isFollowing
                                             ? ProfileButton(

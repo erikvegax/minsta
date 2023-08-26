@@ -1,17 +1,18 @@
 import 'dart:typed_data';
-import 'package:minsta/models/comment.dart';
-import 'package:minsta/resources/auth_methods.dart';
-import 'package:uuid/uuid.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:minsta/models/comment.dart';
 import 'package:minsta/models/post.dart';
+import 'package:minsta/resources/auth_methods.dart';
 import 'package:minsta/resources/storage_methods.dart';
 import 'package:minsta/utils/global_variables.dart';
+import 'package:uuid/uuid.dart';
 
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> uploadPost(
-      String description, uid, username, profileImage, Uint8List file) async {
+  Future<String> uploadPost(String description, String uid, String username,
+      profileImage, Uint8List file) async {
     String res = "error during post upload";
     try {
       String photoUrl = await StorageMethods()
@@ -161,6 +162,50 @@ class FirestoreMethods {
           'following': FieldValue.arrayUnion([followId])
         });
       }
+    } catch (err) {
+      print(err.toString());
+    }
+  }
+
+  Future<void> updateBio(String uid, String bio) async {
+    try {
+      _firestore.collection(usersCollection).doc(uid).update({"bio": bio});
+    } catch (err) {
+      print(err.toString());
+    }
+  }
+
+  Future<void> updateEmail(String uid, String email) async {
+    try {
+      _firestore.collection(usersCollection).doc(uid).update({"email": email});
+    } catch (err) {
+      print(err.toString());
+    }
+  }
+
+  Future<void> updateFirstName(String uid, String firstName) async {
+    try {
+      _firestore
+          .collection(usersCollection)
+          .doc(uid)
+          .update({"firstName": firstName});
+    } catch (err) {
+      print(err.toString());
+    }
+  }
+
+  Future<void> updateProfilePicture(
+    String uid,
+    Uint8List file,
+  ) async {
+    try {
+      String photoUrl = await StorageMethods()
+          .uploadImageToStorage(profilePicStorage, file, false);
+
+      _firestore
+          .collection(usersCollection)
+          .doc(uid)
+          .update({"photoUrl": photoUrl});
     } catch (err) {
       print(err.toString());
     }

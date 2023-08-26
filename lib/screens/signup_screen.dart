@@ -1,13 +1,14 @@
 import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:minsta/resources/auth_methods.dart';
 import 'package:minsta/screens/login_screen.dart';
 import 'package:minsta/utils/colors.dart';
+import 'package:minsta/utils/global_variables.dart';
 import 'package:minsta/utils/utils.dart';
 import 'package:minsta/widgets/text_field_input.dart';
-import 'package:minsta/utils/global_variables.dart';
 
 import '../responsive/mobile_screen_layout.dart';
 import '../responsive/responsive_layout_screen.dart';
@@ -88,6 +89,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final inputBorder =
+        OutlineInputBorder(borderSide: Divider.createBorderSide(context));
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -155,10 +159,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 textInputType: TextInputType.text,
               ),
               sizeBoxH24,
-              TextFieldInput(
-                textEditingController: _bioController,
-                hintText: "bio",
-                textInputType: TextInputType.text,
+              TextField(
+                controller: _bioController,
+                keyboardType: TextInputType.multiline,
+                maxLines: 4,
+                decoration: InputDecoration(
+                  hintText: "bio",
+                  border: inputBorder,
+                  focusedBorder: inputBorder,
+                  enabledBorder: inputBorder,
+                  filled: true,
+                  contentPadding: const EdgeInsets.all(8),
+                ),
               ),
               sizeBoxH24,
               TextFieldInput(

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:minsta/models/user.dart';
 import 'package:intl/intl.dart';
+import 'package:minsta/models/user.dart';
 import 'package:minsta/providers/user_provider.dart';
 import 'package:minsta/resources/firestore_methods.dart';
 import 'package:minsta/screens/comments_screen.dart';
@@ -10,7 +10,8 @@ import 'package:minsta/utils/global_variables.dart';
 import 'package:minsta/utils/utils.dart';
 import 'package:minsta/widgets/like_animation.dart';
 import 'package:provider/provider.dart';
-import 'package:minsta/screens/profile_screen.dart';
+
+import '../screens/profile_screen.dart';
 
 class PostCard extends StatefulWidget {
   final snap;
