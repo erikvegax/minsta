@@ -1,16 +1,15 @@
 # minsta
 
-A new Flutter project.
+a minimal instagram clone built with firebase, firestore, and flutter
 
-## Getting Started
+## follow funtionality
+![](./gifs/follow_sped_up.gif)
 
-This project is a starting point for a Flutter application.
+## unfollow funtionality
+![](./gifs/unfollow_sped_up.gif)
 
-A few resources to get you started if this is your first Flutter project:
+## edit profile funtionality
+![](./gifs/update_profile_sped_up.gif)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## upload post funtionality
+![](./gifs/new_post_sped_up.gif)
