@@ -1,6 +1,5 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
-// import "package:minsta/screens/add_post_image_pick_screen.dart";
 import "package:minsta/screens/add_post_pick_image_screen.dart";
 import "package:minsta/screens/feed_screen.dart";
 import "package:minsta/screens/profile_screen.dart";

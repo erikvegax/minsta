@@ -1,8 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:minsta/screens/add_post_description_screen.dart';
 import 'package:minsta/utils/colors.dart';
 import 'package:minsta/utils/global_variables.dart';
+import 'package:minsta/utils/utils.dart';
 import 'package:minsta/widgets/asset_thumbnail.dart';
 import 'package:photo_manager/photo_manager.dart';
 
@@ -15,12 +17,10 @@ class AddPostPickImageScreen extends StatefulWidget {
 
 class _AddPostPickImageScreenState extends State<AddPostPickImageScreen> {
   Uint8List? _file;
+  Uint8List? firstAsset;
   List<AssetEntity> assets = [];
-  late AssetEntity firstAsset;
-  bool _isLoading = false;
 
   _fetchAssets() async {
-    _isLoading = true;
     final albums = await PhotoManager.getAssetPathList(onlyAll: true);
     final recentAlbum = albums.first;
 
@@ -29,20 +29,29 @@ class _AddPostPickImageScreenState extends State<AddPostPickImageScreen> {
       end: 1000000,
     );
 
-    // Update the state and notify UI
     setState(() => assets = recentAssets);
 
-    setState(() {
-      firstAsset = assets[0];
-    });
+    recentAssets[0].originBytes.then(
+          (value) => setState(
+            () {
+              firstAsset = value!;
+            },
+          ),
+        );
+  }
 
-    _isLoading = false;
+  pickImage(AssetEntity asset) {
+    asset.originBytes.then(
+      (value) => setState(() {
+        _file = value!;
+      }),
+    );
   }
 
   @override
   void initState() {
-    _fetchAssets();
     super.initState();
+    _fetchAssets();
   }
 
   void clear() {
@@ -57,30 +66,40 @@ class _AddPostPickImageScreenState extends State<AddPostPickImageScreen> {
       return Container();
     }
 
-    return _isLoading
+    return firstAsset == null
         ? loading
         : Scaffold(
             appBar: PreferredSize(
               preferredSize: const Size.fromHeight(65.0),
               child: AppBar(
+                automaticallyImplyLeading: false,
                 backgroundColor: mobileBackgroundColor,
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: clear,
-                ),
                 title: const Text("pick image"),
-                centerTitle: true,
                 actions: [
                   TextButton(
-                      onPressed: () => {},
-                      child: const Text(
-                        "post",
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                    onPressed: () => Navigator.of(context)
+                        .push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                AddPostDescriptionScreen(file: _file!),
+                          ),
+                        )
+                        .then(
+                          (value) => setState(
+                            () {
+                              clear();
+                            },
+                          ),
                         ),
-                      ))
+                    child: const Text(
+                      "next",
+                      style: TextStyle(
+                        color: Colors.blueAccent,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -90,20 +109,14 @@ class _AddPostPickImageScreenState extends State<AddPostPickImageScreen> {
                   height: MediaQuery.of(context).size.width * 0.97,
                   width: MediaQuery.of(context).size.width * 0.97,
                   child: _file == null
-                      ? AssetThumbnail(asset: firstAsset)
-                      : AssetThumbnail(
-                          asset:
-                              firstAsset), // figuire out how to display chosen image
+                      ? Image.memory(firstAsset!, fit: BoxFit.cover)
+                      : Image.memory(_file!, fit: BoxFit.cover),
                 ),
-                const Divider(),
+                sizeBoxH6,
                 FutureBuilder(
                   future: null,
                   initialData: assets,
                   builder: (context, snapshot) {
-                    if (_isLoading) {
-                      return loading;
-                    }
-
                     return GridView.builder(
                       shrinkWrap: true,
                       gridDelegate:
@@ -114,7 +127,10 @@ class _AddPostPickImageScreenState extends State<AddPostPickImageScreen> {
                       ),
                       itemCount: assets.length,
                       itemBuilder: (_, index) {
-                        return AssetThumbnail(asset: assets[index]);
+                        return InkWell(
+                          onTap: () => pickImage(assets[index]),
+                          child: AssetThumbnail(asset: assets[index]),
+                        );
                       },
                     );
                   },
