@@ -1,6 +1,7 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
-import "package:minsta/screens/add_post_screen.dart";
+// import "package:minsta/screens/add_post_image_pick_screen.dart";
+import "package:minsta/screens/add_post_pick_image_screen.dart";
 import "package:minsta/screens/feed_screen.dart";
 import "package:minsta/screens/profile_screen.dart";
 import "package:minsta/screens/search_screen.dart";
@@ -14,7 +15,7 @@ const loading = Center(
 List<Widget> homeScreenItems = [
   FeedScreen(uid: FirebaseAuth.instance.currentUser!.uid),
   const SearchScreen(),
-  const AddPostScreen(),
+  const AddPostPickImageScreen(),
   Container(
     alignment: Alignment.center,
     child: const Text("todo"),
