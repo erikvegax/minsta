@@ -2,14 +2,14 @@
 
 a minimal instagram clone built with firebase, firestore, and flutter
 
-## follow funtionality
-![](./gifs/follow_sped_up.gif)
+## follow functionality
+<img src="/gifs/follow_sped_up.gif" height="70%"/>
 
-## unfollow funtionality
-![](./gifs/unfollow_sped_up.gif)
+## unfollow functionality
+<img src="/gifs/unfollow_sped_up.gif" height="70%"/>
 
-## edit profile funtionality
-![](./gifs/update_profile_sped_up.gif)
+## edit profile functionality
+<img src="/gifs/update_profile_sped_up.gif" height="70%"/>
 
-## upload post funtionality
-![](./gifs/new_post_sped_up.gif)
+## upload post functionality
+<img src="/gifs/new_post_sped_up.gif" height="70%"/>
