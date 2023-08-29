@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:minsta/resources/auth_methods.dart';
 import 'package:minsta/resources/firestore_methods.dart';
 import 'package:minsta/screens/edit_profile_screen.dart';
 import 'package:minsta/utils/colors.dart';
@@ -59,6 +60,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthMethods _authMethods = AuthMethods();
+
     final width = MediaQuery.of(context).size.width;
     return isLoading
         ? loading
@@ -75,7 +78,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ? false
                       : true,
               title: Text(userData["username"]),
-              centerTitle: false,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.settings),
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (context) => Dialog(
+                      child: ListView(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8,
+                        ),
+                        shrinkWrap: true,
+                        children: ["sign out"]
+                            .map(
+                              (e) => InkWell(
+                                onTap: () => _authMethods
+                                    .signOut()
+                                    .then((_) => Navigator.pop(context)),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 12,
+                                    horizontal: 16,
+                                  ),
+                                  child: Text(
+                                    e,
+                                    style: const TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ),
+                  ),
+                )
+              ],
             ),
             body: ListView(
               children: [
